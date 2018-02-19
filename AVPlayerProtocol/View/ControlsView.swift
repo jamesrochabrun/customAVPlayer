@@ -9,6 +9,11 @@
 import Foundation
 import UIKit
 
+protocol ControlsViewDelegate: class {
+    func skipButtonTapped()
+    func replayButtonTapped()
+}
+
 class ControlsView: BaseView {
     
     // MARK: UI ELements
@@ -31,9 +36,9 @@ class ControlsView: BaseView {
     }()
     
     let replayButton: UIButton = {
-        let b = UIButton(type: .system)
+        let b = UIButton(type: UIButtonType.custom)
         b.addTarget(self, action: #selector(replay), for: .touchUpInside)
-        b.backgroundColor = .red
+        b.setImage(#imageLiteral(resourceName: "replayIcon"), for: .normal)
         b.translatesAutoresizingMaskIntoConstraints = false
         return b
     }()

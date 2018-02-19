@@ -5,7 +5,6 @@
 //  Created by James Rochabrun on 2/11/18.
 //  Copyright © 2018 James Rochabrun. All rights reserved.
 
-
 import UIKit
 import AVFoundation
 
@@ -21,9 +20,18 @@ class VideoPlayerView: BaseView {
     
     // MARK: UI Elements
     let player: AVPlayer = {
-        let path = Bundle.main.path(forResource: "onboarding", ofType:"mp4")
+        let path = Bundle.main.path(forResource: "vid", ofType:"mp4")
         let player = AVPlayer(url: URL(fileURLWithPath: path!))
         return player
+    }()
+    
+    let videoImagePlaceHolderView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFit
+        iv.clipsToBounds = true
+        iv.alpha = 0
+        iv.image = #imageLiteral(resourceName: "mfyVideo")
+        return iv
     }()
     
     var playerLayer: AVPlayerLayer?
@@ -41,6 +49,7 @@ class VideoPlayerView: BaseView {
     // MARK: -  override Init
     override func setUpViews() {
         self.playerLayer = AVPlayerLayer(player: player)
+        addSubview(videoImagePlaceHolderView)
         addSubview(controlsContainerView)
         registerNotificationsForVideoStatus()
     }
@@ -60,10 +69,12 @@ class VideoPlayerView: BaseView {
         super.layoutSubviews()
         /// Setting the frames here after the frames are defined
         setUpPlayerView()
+        setUpPlaceHolderLayout()
         setUpControlsLayout()
     }
     
-    // MARK: -  Setup Views Layout
+    // MARK: -  Setup Views Layout "layers"
+    /// Video Layer
     private func setUpPlayerView() {
        // self.playerLayer = AVPlayerLayer(player: player)
         guard let playerLayer = self.playerLayer else { return }
@@ -72,10 +83,17 @@ class VideoPlayerView: BaseView {
         player.play()
     }
     
+    /// PlaceHolder Layer
+    private func setUpPlaceHolderLayout() {
+        videoImagePlaceHolderView.frame = frame
+        bringSubview(toFront: videoImagePlaceHolderView)
+    }
+    
+    /// Controls Layer
     private func setUpControlsLayout() {
         controlsContainerView.frame = frame
         bringSubview(toFront: controlsContainerView)
-      }
+    }
     
     // MARK: - Set up KVO for starting point of video
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -88,14 +106,15 @@ class VideoPlayerView: BaseView {
     
     // MARK: - Set up notification for ending point of video
     @objc private func playerDidFinished() {
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: 0.4) {
             self.controlsContainerView.hideButtons(false)
             self.controlsContainerView.alpha = 1.0
+            self.videoImagePlaceHolderView.alpha = 1.0
         }
     }
 }
 
-
+// MARK: - ControlsVIew actions Skip && Replay
 extension VideoPlayerView: ControlsViewDelegate {
     
     func skipButtonTapped() {
@@ -103,20 +122,16 @@ extension VideoPlayerView: ControlsViewDelegate {
     }
     
     func replayButtonTapped() {
-        UIView.animate(withDuration: 0.3, animations: {
+        self.player.seek(to: kCMTimeZero)
+        UIView.animate(withDuration: 0.5, animations: {
             self.controlsContainerView.alpha = 0
+            self.videoImagePlaceHolderView.alpha = 0
         }) { (_) in
-            self.player.seek(to: kCMTimeZero)
-            self.player.play()
+                self.player.play()
         }
     }
 }
 
-
-protocol ControlsViewDelegate: class {
-    func skipButtonTapped()
-    func replayButtonTapped()
-}
 
 
 

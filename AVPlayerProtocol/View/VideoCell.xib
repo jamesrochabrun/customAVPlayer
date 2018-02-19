@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -18,16 +19,23 @@
                 <rect key="frame" x="0.0" y="0.0" width="375" height="479.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5dz-OW-TGk">
+                        <rect key="frame" x="16" y="31" width="343" height="438"/>
+                    </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q6l-tC-ECH" customClass="VideoPlayerView" customModule="AVPlayerProtocol" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="479.5"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="480"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Q6l-tC-ECH" firstAttribute="leading" secondItem="TWq-pj-T3b" secondAttribute="leading" id="TfL-KQ-gXP"/>
-                    <constraint firstAttribute="trailing" secondItem="Q6l-tC-ECH" secondAttribute="trailing" id="dza-0X-blM"/>
-                    <constraint firstItem="Q6l-tC-ECH" firstAttribute="top" secondItem="TWq-pj-T3b" secondAttribute="top" id="gbL-rl-KU2"/>
-                    <constraint firstAttribute="bottom" secondItem="Q6l-tC-ECH" secondAttribute="bottom" id="rYk-SD-jbL"/>
+                    <constraint firstAttribute="bottom" secondItem="Q6l-tC-ECH" secondAttribute="bottom" id="35Z-av-a55"/>
+                    <constraint firstItem="Q6l-tC-ECH" firstAttribute="leading" secondItem="TWq-pj-T3b" secondAttribute="leading" id="8F9-6F-XLj"/>
+                    <constraint firstItem="5dz-OW-TGk" firstAttribute="bottom" secondItem="TWq-pj-T3b" secondAttribute="bottomMargin" id="ILN-ma-AXO"/>
+                    <constraint firstItem="Q6l-tC-ECH" firstAttribute="top" secondItem="TWq-pj-T3b" secondAttribute="top" id="Kyh-Ed-hoX"/>
+                    <constraint firstAttribute="trailing" secondItem="Q6l-tC-ECH" secondAttribute="trailing" id="TQJ-mC-nPP"/>
+                    <constraint firstItem="5dz-OW-TGk" firstAttribute="top" secondItem="TWq-pj-T3b" secondAttribute="topMargin" id="lKb-ml-PYB"/>
+                    <constraint firstItem="5dz-OW-TGk" firstAttribute="leading" secondItem="TWq-pj-T3b" secondAttribute="leadingMargin" id="lyI-MT-RJh"/>
+                    <constraint firstItem="5dz-OW-TGk" firstAttribute="trailing" secondItem="TWq-pj-T3b" secondAttribute="trailingMargin" id="tr9-EC-Oig"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
